@@ -6,12 +6,15 @@
 
 	// TaskApp component
 	var TasksApp = React.createClass({
+		formOrButton: function () {
+			return Ceres.userId ? <TaskForm /> : <LoginButton />;
+		},
 		render: function () {
 			return (
 				<div className="col-xs-12 col-sm-6 col-sm-offset-3">
 					<h3>asteroid todo</h3>
 					<br />
-					<TaskForm />
+					{this.formOrButton()}
 					<TasksList tasks={this.props.tasks} />
 				</div>
 			);
@@ -60,8 +63,11 @@
 						<div className="col-xs-1">
 							{done}
 						</div>
-						<div className="col-xs-10">
+						<div className="col-xs-5">
 							{description}
+						</div>
+						<div className="col-xs-5">
+							{this.props.task.userName}
 						</div>
 						<div className="col-xs-1">
 							<i className="fa fa-times" onClick={this.deleteTask}></i>
@@ -93,7 +99,10 @@
 			if (this.state.inputValue === "") {
 				return;
 			}
+			var user = Users.reactiveQuery({_id: Ceres.userId}).result[0];
 			Tasks.insert({
+				userId: user._id,
+				userName: user.profile.name,
 				description: this.state.inputValue,
 				done: false
 			});
@@ -110,6 +119,18 @@
 		}
 	});
 
+	var LoginButton = React.createClass({
+		login: function () {
+			Ceres.loginWithFacebook();
+		},
+		render: function () {
+			return (
+				<div className="form-group">
+					<button className="btn btn-block btn-default" onClick={this.login}>Login</button>
+				</div>
+			);
+		}
+	});
 
 
 	// Render function
@@ -125,9 +146,14 @@
 	var Ceres = new Asteroid("localhost:3000");
 	Ceres.subscribe("tasks");
 	var Tasks = Ceres.getCollection("tasks");
+	var Users = Ceres.getCollection("users");
 
 	var tasksRQ = Tasks.reactiveQuery({});
 	tasksRQ.on("change", function () {
+		render(tasksRQ.result);
+	});
+
+	Ceres.on("login", function () {
 		render(tasksRQ.result);
 	});
 

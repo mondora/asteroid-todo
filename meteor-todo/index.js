@@ -1,11 +1,20 @@
 var Tasks = new Meteor.Collection("tasks");
-var always = function () {
-	return true;
+
+var ownsTask = function (userId, task) {
+	return (
+		userId &&
+		task.userId === userId
+	);
 };
 Tasks.allow({
-	insert: always,
-	update: always,
-	remove: always
+	insert: ownsTask,
+	update: function (userId, task, fields) {
+		return (
+			ownsTask(userId, task) &&
+			!_.contains(fields, "userId")
+		);
+	},
+	remove: ownsTask
 });
 
 if (Meteor.isClient) {
@@ -18,6 +27,8 @@ if (Meteor.isClient) {
 				return;
 			}
 			Tasks.insert({
+				userId: Meteor.userId(),
+				userName: Meteor.user().profile.name,
 				description: e.target.value,
 				done: false
 			});
@@ -49,6 +60,12 @@ if (Meteor.isClient) {
 					done: !task.done
 				}
 			});
+		}
+	});
+
+	Template.LoginButton.events({
+		"click button": function () {
+			Meteor.loginWithFacebook();
 		}
 	});
 

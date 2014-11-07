@@ -7,7 +7,11 @@
 			<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 				<h3>asteroid todo</h3>
 				<br />
-				{{> TaskForm }}
+				{{#if currentUser}}
+					{{> TaskForm }}
+				{{else}}
+					{{> LoginButton }}
+				{{/if}}
 				{{> TasksList }}
 			</div>
 		</div>
@@ -34,16 +38,25 @@
 			<div class="col-xs-1">
 				<i class="fa {{checkboxClass}} toggle"></i>
 			</div>
-			<div class="col-xs-10">
+			<div class="col-xs-5">
 				{{#if done}}
 					<s>{{description}}</s>
 				{{else}}
 					{{description}}
 				{{/if}}
 			</div>
+			<div class="col-xs-5">
+				{{userName}}
+			</div>
 			<div class="col-xs-1">
 				<i class="fa fa-times remove"></i>
 			</div>
 		</div>
 	</li>
+</template>
+
+<template name="LoginButton">
+	<div class="form-group">
+		<button class="btn btn-block btn-default">Login</button>
+	</div>
 </template>
