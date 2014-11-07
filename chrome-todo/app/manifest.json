@@ -1,0 +1,21 @@
+{
+	"name": "chrome-todo",
+	"manifest_version": 2,
+	"description": "chrome-todo",
+	"version": "1.0.0",
+	"background": {
+		"scripts": [
+			"js/vendor.js",
+			"js/background.js"
+		],
+		"persistent": false
+	},
+	"permissions": [
+		"activeTab",
+		"storage",
+		"tabs"
+	],
+	"browser_action": {
+		"default_popup": "index.html"
+	}
+}
