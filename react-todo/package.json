@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "author": "Paolo Scanferla <paolo.scanferla@mondora.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node_modules/gulp/bin/gulp.js"
+  },
   "dependencies": {},
   "devDependencies": {
     "bluebird": "^2.3.5",

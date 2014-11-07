@@ -1,0 +1,23 @@
+{
+  "name": "asteroid-todo",
+  "version": "1.0.0",
+  "description": "asteroid demo application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mondora/asteroid-demo.git"
+  },
+  "author": "Paolo Scanferla <paolo.scanferla@mondora.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mondora/asteroid-demo/issues"
+  },
+  "homepage": "https://github.com/mondora/asteroid-demo",
+  "dependencies": {
+    "asteroid": "^0.4.0",
+    "jetty": "^0.2.1"
+  }
+}
