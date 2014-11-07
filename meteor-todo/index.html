@@ -1,0 +1,49 @@
+<head>
+	<title>asteroid todo</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+				<h3>asteroid todo</h3>
+				<br />
+				{{> TaskForm }}
+				{{> TasksList }}
+			</div>
+		</div>
+	</div>
+</body>
+
+<template name="TaskForm">
+	<div class="form-group">
+		<input class="form-control" placeholder="Add a task" autoFocus />
+	</div>
+</template>
+
+<template name="TasksList">
+	<ul class="list-group">
+		{{#each tasks}}
+			{{> TaskSummary}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="TaskSummary">
+	<li class="list-group-item">
+		<div class="row">
+			<div class="col-xs-1">
+				<i class="fa {{checkboxClass}} toggle"></i>
+			</div>
+			<div class="col-xs-10">
+				{{#if done}}
+					<s>{{description}}</s>
+				{{else}}
+					{{description}}
+				{{/if}}
+			</div>
+			<div class="col-xs-1">
+				<i class="fa fa-times remove"></i>
+			</div>
+		</div>
+	</li>
+</template>
