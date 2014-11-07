@@ -122,34 +122,17 @@
 
 
 
-	// Tasks model
-	Tasks = {
-		insert: function (task) {
-			task._id = this._store.length;
-			this._store[task._id] = task;
-			this._onChange();
-		},
-		update: function (taskId, fields) {
-			var task = this._store[taskId];
-			Object.keys(fields).forEach(function (key) {
-				task[key] = fields[key];
-			});
-			this._onChange();
-		},
-		remove: function (taskId) {
-			delete this._store[taskId];
-			this._onChange();
-		},
-		_store: [],
-		_onChange: function () {
-			render(this._store);
-		}
-	};
+	var Ceres = new Asteroid("localhost:3000");
+	Ceres.subscribe("tasks");
+	var Tasks = Ceres.getCollection("tasks");
 
-
+	var tasksRQ = Tasks.reactiveQuery({});
+	tasksRQ.on("change", function () {
+		render(tasksRQ.result);
+	});
 
 	// Bootstrap the app
-	render(Tasks._store);
+	render(tasksRQ.result);
 
 
 
